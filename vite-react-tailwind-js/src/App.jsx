@@ -202,25 +202,27 @@ function App() {
   }, [fetchEditions])
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
         {/* Header */}
-        <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+        <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12 animate-in slide-in-from-top duration-700">
           <div>
-            <h1 className="text-3xl font-bold text-gray-50">DTU Times — Editions</h1>
-            <p className="text-gray-200 mt-1">CRUD + Search + Sort + Pagination</p>
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent mb-2">
+              DTU Times — Editions
+            </h1>
+            <p className="text-gray-400 text-lg font-medium">CRUD + Search + Sort + Pagination</p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-4 animate-in slide-in-from-right duration-700 delay-200">
             <button 
-              className="btn btn-secondary"
+              className="px-6 py-3 bg-gray-800 hover:bg-gray-700 text-gray-200 font-medium rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg border border-gray-700 hover:border-gray-600"
               onClick={handleRefresh}
               disabled={loading}
             >
               {loading ? 'Loading...' : 'Refresh'}
             </button>
             <button 
-              className="btn btn-primary"
+              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-medium rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl shadow-blue-500/25"
               onClick={handleAddNew}
             >
               Add Edition
@@ -229,17 +231,17 @@ function App() {
         </header>
 
         {/* Search and Filter Section */}
-        <section className=" rounded-lg shadow-sm border p-6 mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <section className="bg-gray-900/60 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-8 mb-12 animate-in fade-in-50 slide-in-from-bottom duration-700 delay-300">
+          <div className="grid grid-cols-1 lg:grid-cols-7 gap-6">
             <input
               type="text"
               placeholder="Search title, summary, tags..."
-              className="bg-gray-800 text-gray-200 md:col-span-2 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="lg:col-span-4 px-4 py-3 bg-gray-800/80 text-gray-200 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 placeholder-gray-400"
               value={searchQuery}
               onChange={handleSearch}
             />
             <select
-              className="bg-gray-800 text-gray-200 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="lg:col-span-2 px-4 py-3 bg-gray-800/80 text-gray-200 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 transition-all duration-300"
               value={sortBy}
               onChange={handleSortByChange}
             >
@@ -248,7 +250,7 @@ function App() {
               <option value="title">Sort by Title</option>
             </select>
             <select
-              className="bg-gray-800 text-gray-200 px-4 py-2 border border-gray-800 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-3 bg-gray-800/80 text-gray-200 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 transition-all duration-300"
               value={sortOrder}
               onChange={handleSortOrderChange}
             >
@@ -260,36 +262,40 @@ function App() {
 
         {/* Error Message */}
         {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+          <div className="bg-red-500/10 border border-red-500/30 text-red-400 px-6 py-4 rounded-xl mb-8 animate-in shake">
             {error}
           </div>
         )}
 
         {/* Editions Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 mb-12">
           {loading ? (
             // Loading skeleton cards
             Array.from({ length: itemsPerPage }).map((_, index) => (
-              <div key={index} className="bg-gray-800 rounded-lg shadow-sm border animate-pulse">
-                <div className="h-48 bg-gray-800 rounded-t-lg"></div>
+              <div key={index} className="bg-gray-800/60 rounded-2xl overflow-hidden animate-pulse">
+                <div className="h-56 bg-gray-700/50"></div>
                 <div className="p-6">
-                  <div className="h-4 bg-gray-800 rounded mb-2"></div>
-                  <div className="h-4 bg-gray-800 rounded mb-4"></div>
-                  <div className="h-20 bg-gray-800 rounded"></div>
+                  <div className="h-6 bg-gray-700/50 rounded mb-3"></div>
+                  <div className="h-4 bg-gray-700/50 rounded mb-2"></div>
+                  <div className="h-4 bg-gray-700/50 rounded w-3/4 mb-4"></div>
+                  <div className="h-20 bg-gray-700/50 rounded"></div>
                 </div>
               </div>
             ))
           ) : editions.length === 0 ? (
-            <div className="col-span-full text-center py-12 text-gray-500">
-              No editions found. {searchQuery && 'Try adjusting your search terms.'}
+            <div className="col-span-full text-center py-20 text-gray-400 animate-in fade-in duration-1000">
+              <div className="text-6xl mb-4">📚</div>
+              <h3 className="text-2xl font-semibold text-gray-300 mb-2">No editions found</h3>
+              <p>{searchQuery ? 'Try adjusting your search terms.' : 'Start by adding your first edition.'}</p>
             </div>
           ) : (
-            editions.map(edition => (
+            editions.map((edition, index) => (
               <EditionCard 
                 key={edition.id} 
                 edition={edition}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
+                index={index}
               />
             ))
           )}
@@ -328,55 +334,66 @@ function App() {
 }
 
 // Edition Card Component
-const EditionCard = ({ edition, onEdit, onDelete }) => {
+const EditionCard = ({ edition, onEdit, onDelete, index }) => {
+  const delayClass = `animate-in fade-in-50 slide-in-from-bottom duration-700 delay-[${(index % 6) * 100 + 400}ms]`
+  
   return (
-    <article className="bg-gray-800 rounded-lg shadow-sm border overflow-hidden hover:shadow-md transition-shadow">
+    <article className={`group bg-gray-800/60 backdrop-blur-sm rounded-2xl overflow-hidden border border-gray-700/50 hover:border-gray-600/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-black/20 ${delayClass}`}>
       {edition.coverImageUrl && (
-        <img
-          src={edition.coverImageUrl}
-          alt={edition.title}
-          className="w-full h-48 object-cover"
-          loading="lazy"
-        />
+        <div className="relative overflow-hidden">
+          <img
+            src={edition.coverImageUrl}
+            alt={edition.title}
+            className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        </div>
       )}
       <div className="p-6">
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="text-lg font-semibold text-gray-200 line-clamp-2 flex-1">
+        <div className="flex justify-between items-start mb-4">
+          <h3 className="text-xl font-bold text-gray-100 line-clamp-2 flex-1 group-hover:text-white transition-colors duration-300">
             {edition.title}
           </h3>
-          <span className="text-sm text-gray-500 ml-2 flex-shrink-0">
+          <span className="text-sm text-gray-400 ml-3 font-mono bg-gray-700/50 px-2 py-1 rounded-lg">
             #{edition.issueNumber}
           </span>
         </div>
         
-        <p className="text-gray-300 text-sm mb-4 line-clamp-3">
+        <p className="text-gray-300 text-sm leading-relaxed mb-4 line-clamp-3">
           {edition.summary}
         </p>
         
-        <div className="flex flex-wrap gap-2 mb-4">
-          {edition.tags?.map(tag => (
-            <span
-              key={tag}
-              className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
+        {edition.tags && edition.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-6">
+            {edition.tags.map(tag => (
+              <span
+                key={tag}
+                className="px-3 py-1 bg-blue-500/20 text-blue-300 text-xs font-medium rounded-full border border-blue-500/30 hover:bg-blue-500/30 hover:scale-105 transition-all duration-300"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
         
         <div className="flex justify-between items-center">
-          <span className="text-sm text-gray-500">
-            {new Date(edition.publishDate).toLocaleDateString()}
+          <span className="text-sm text-gray-400 font-medium">
+            {new Date(edition.publishDate).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric'
+            })}
           </span>
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <button
-              className="btn btn-sm btn-secondary"
+              className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-gray-200 text-sm font-medium rounded-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
               onClick={() => onEdit(edition)}
             >
               Edit
             </button>
             <button
-              className="btn btn-sm btn-danger"
+              className="px-4 py-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white text-sm font-medium rounded-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg shadow-red-500/25"
               onClick={() => onDelete(edition.id)}
             >
               Delete
@@ -393,20 +410,20 @@ const Modal = ({ show, onClose, title, children }) => {
   if (!show) return null
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-gray-800 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="flex justify-between items-center p-6 border-b">
-          <h2 className="text-xl font-semibold">{title}</h2>
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-in fade-in duration-300">
+      <div className="bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl max-w-4xl w-full max-h-[95vh] overflow-y-auto border border-gray-700/50 animate-in zoom-in-95 slide-in-from-bottom duration-300">
+        <div className="flex justify-between items-center p-8 border-b border-gray-700/50">
+          <h2 className="text-2xl font-bold text-gray-100">{title}</h2>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-gray-400 hover:text-gray-200 transition-all duration-300 hover:rotate-90 hover:bg-gray-800 p-2 rounded-xl"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
-        <div className="p-6">
+        <div className="p-8">
           {children}
         </div>
       </div>
@@ -417,92 +434,92 @@ const Modal = ({ show, onClose, title, children }) => {
 // Form Component
 const EditionForm = ({ formData, onChange, onSubmit, onCancel, loading }) => {
   return (
-    <form onSubmit={onSubmit}>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+    <form onSubmit={onSubmit} className="space-y-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-medium text-gray-200 mb-2">
+          <label className="block text-sm font-semibold text-gray-200 mb-3">
             Title *
           </label>
           <input
             type="text"
             required
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-3 bg-gray-800/80 text-gray-200 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
             value={formData.title}
             onChange={(e) => onChange('title', e.target.value)}
           />
         </div>
         
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-semibold text-gray-200 mb-3">
             Issue Number *
           </label>
           <input
             type="number"
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-3 bg-gray-800/80 text-gray-200 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
             value={formData.issueNumber}
             onChange={(e) => onChange('issueNumber', e.target.value)}
           />
         </div>
         
-        <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+        <div className="lg:col-span-2">
+          <label className="block text-sm font-semibold text-gray-200 mb-3">
             Cover Image URL *
           </label>
           <input
             type="url"
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-3 bg-gray-800/80 text-gray-200 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
             value={formData.coverImageUrl}
             onChange={(e) => onChange('coverImageUrl', e.target.value)}
           />
         </div>
         
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-semibold text-gray-200 mb-3">
             Publish Date *
           </label>
           <input
             type="date"
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-3 bg-gray-800/80 text-gray-200 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
             value={formData.publishDate}
             onChange={(e) => onChange('publishDate', e.target.value)}
           />
         </div>
         
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-semibold text-gray-200 mb-3">
             Tags (comma-separated)
           </label>
           <input
             type="text"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-3 bg-gray-800/80 text-gray-200 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
             value={formData.tags}
             onChange={(e) => onChange('tags', e.target.value)}
             placeholder="innovation, alumni, research"
           />
         </div>
         
-        <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+        <div className="lg:col-span-2">
+          <label className="block text-sm font-semibold text-gray-200 mb-3">
             Summary *
           </label>
           <textarea
             required
-            rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            rows={5}
+            className="w-full px-4 py-3 bg-gray-800/80 text-gray-200 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none"
             value={formData.summary}
             onChange={(e) => onChange('summary', e.target.value)}
           />
         </div>
       </div>
       
-      <div className="flex justify-end gap-3">
+      <div className="flex justify-end gap-4 pt-6 border-t border-gray-700/50">
         <button
           type="button"
           onClick={onCancel}
-          className="btn btn-secondary"
+          className="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-gray-200 font-medium rounded-xl transition-all duration-300 hover:-translate-y-0.5"
           disabled={loading}
         >
           Cancel
@@ -510,7 +527,7 @@ const EditionForm = ({ formData, onChange, onSubmit, onCancel, loading }) => {
         <button
           type="submit"
           disabled={loading}
-          className="btn btn-primary"
+          className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-medium rounded-xl transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl shadow-blue-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? 'Saving...' : 'Save'}
         </button>
@@ -529,8 +546,8 @@ const Pagination = ({
   onItemsPerPageChange 
 }) => {
   return (
-    <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-8">
-      <div className="text-sm text-gray-600">
+    <div className="flex flex-col sm:flex-row justify-between items-center gap-6 pt-8 border-t border-gray-700/50 animate-in slide-in-from-bottom duration-700 delay-500">
+      <div className="text-sm text-gray-400">
         Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, totalItems)} of {totalItems} results
       </div>
       
@@ -538,19 +555,19 @@ const Pagination = ({
         <button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage <= 1}
-          className="btn btn-sm btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-200 font-medium rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:-translate-y-0.5"
         >
           Previous
         </button>
         
-        <span className="text-sm text-gray-200">
+        <span className="text-sm text-gray-300 font-medium px-4">
           Page {currentPage} of {totalPages}
         </span>
         
         <button
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage >= totalPages}
-          className="btn btn-sm btn-secondary disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-200 font-medium rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:-translate-y-0.5"
         >
           Next
         </button>
@@ -558,12 +575,12 @@ const Pagination = ({
         <select
           value={itemsPerPage}
           onChange={(e) => onItemsPerPageChange(Number(e.target.value))}
-          className="px-3 py-1 border bg-gray-800 text-gray-200 border-gray-200 rounded text-sm focus:ring-2 focus:ring-blue-500"
+          className="px-4 py-2 bg-gray-800 text-gray-200 border border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 transition-all duration-300"
         >
-          <option className="text-gray-800" value={6}>6 per page</option>
-          <option className="text-gray-800" value={9}>9 per page</option>
-          <option className="text-gray-800" value={12}>12 per page</option>
-          <option className="text-gray-800" value={18}>18 per page</option>
+          <option value={6}>6 per page</option>
+          <option value={9}>9 per page</option>
+          <option value={12}>12 per page</option>
+          <option value={18}>18 per page</option>
         </select>
       </div>
     </div>
