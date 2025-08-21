@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 
-const API_URL = 'http://localhost:4000'
+const API_URL = 'https://dtu-times-assignment.onrender.com'
 
 const emptyForm = {
   title: '',
